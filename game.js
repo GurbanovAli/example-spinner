@@ -1,4 +1,4 @@
-var width = 1280,
+let width = 1280,
 	height = 720,
 	loader = PIXI.loader,
 	resources = loader.resources,
@@ -92,7 +92,7 @@ function onAssetsLoaded() {
 }
 
 function init() {
-	var bgr = new PIXI.Sprite(resources.bgr.texture);
+	let bgr = new PIXI.Sprite(resources.bgr.texture);
 	stage.addChild(bgr);
 
 	reelPanel = new PIXI.Sprite(resources.reelPanel.texture);
@@ -117,11 +117,8 @@ function init() {
 	reel3.position.set(426, 10);
 	reelPanelOne.addChild(reel3)
 	reel3.init()
-	
 
 	reel4 = new Button()
-	// /reel4.press()
-
 
 	reelPanel.addChild(reel4)
 

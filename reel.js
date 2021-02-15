@@ -10,23 +10,23 @@ Reel.prototype.constructor = Reel;
 
 Reel.prototype.init = function () {
 
-	for (var i = 0; i < this.reelstrip.length; i++) {
+	for (let i = 0; i < this.reelstrip.length; i++) {
 		if (this.reelstrip[i] === 8) {
-			var element = new PIXI.Sprite(resources["gsym_" + this.reelstrip[i]].texture);
+			let element = new PIXI.Sprite(resources["gsym_" + this.reelstrip[i]].texture);
 			element.y = 168 * i - 176;
 			element.x = -9;
 
 			this.arr.push(element);
 			this.arrWild.push(element);
 		} else {
-			var element = new PIXI.Sprite(resources["gsym_" + this.reelstrip[i]].texture);
+			let element = new PIXI.Sprite(resources["gsym_" + this.reelstrip[i]].texture);
 			element.y = 168 * i - 168
 			this.arr.push(element)
 			this.addChild(element);
 		}
 	}
 
-	for (var j = 0; j < this.arrWild.length; j++) {
+	for (let j = 0; j < this.arrWild.length; j++) {
 		this.addChild(this.arrWild[j]);
 	}
 
@@ -35,46 +35,31 @@ Reel.prototype.init = function () {
 	rectangle.drawRect(0, 0, 198, 504);
 	this.mask = rectangle;
 	this.addChild(rectangle);
-	for(let i =0; i < this.arr.length; i++) {
-		// console.log(this.arr[i].y)
-		if(this.arr[i].y >= 336 && this.arr[i].y <= 504){
-			console.log(this.arr[i].y)
-		}
-	}
+
 };
 
 Reel.prototype.spin = function () {
 
-	for (var i = 0; i < this.arr.length; i++) {
-		if (this.arr[i].y < 0 && this.arr[i].y > 504) {
-			this.arr[i].visible = false;
-		};
+	for (let i = 0; i < this.arr.length; i++) {
 		if (this.arr[i].y < 168 * (this.arr.length - 1)) {
-			this.arr[i].y += 8;
+			this.arr[i].y += 30;
 		} else {
 			this.arr[i].y = -168;
 		}
 	}
-
-	
-	
-
 };
 
-Reel.prototype.stop= function () {
-	// for(let i =0; i < this.arr.length; i++) {
-	// 	// console.log(this.arr[i].y)
-	// 	if(this.arr[i].y >= 336 && this.arr[i].y <= 504){
-	// 		console.log(this.arr[i].y)
-	// 	}
-	// }
-	
-	// //let exe = []
-	// for(let i =0; i < this.arr.length; i++) {
-	// 	if(this.arr[i].y <= 168){
-	// 		console.log(  this.arr[i].y )
-	// 	}
-	// }
-	//sconsole.log(  this.arr[1].y )
-	
+Reel.prototype.stop = function () {
+	let value;
+
+	for (let i = 0; i < this.arr.length; i++) {
+		if (this.arr[i].y >= 0 && this.arr[i].y <= 168) {
+			value = this.arr[i].y;
+			for (let j = 0; j < this.arr.length; j++) {
+				this.arr[j].y -= value / 4;
+				
+			}
+		}
+	}
+
 }
