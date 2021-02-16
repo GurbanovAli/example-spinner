@@ -15,6 +15,7 @@ Reel.prototype.init = function () {
 			let element = new PIXI.Sprite(resources["gsym_" + this.reelstrip[i]].texture);
 			element.y = 168 * i - 176;
 			element.x = -9;
+			
 
 			this.arr.push(element);
 			this.arrWild.push(element);
@@ -40,14 +41,21 @@ Reel.prototype.init = function () {
 
 Reel.prototype.spin = function () {
 
-	for (let i = 0; i < this.arr.length; i++) {
-		if (this.arr[i].y < 168 * (this.arr.length - 1)) {
-			this.arr[i].y += 30;
-		} else {
-			this.arr[i].y = -168;
+	for (i = 0; i < this.arr.length; i++) {
+		this.arr[i].y += 30;
+		if (this.arr[i].y < -20 || this.arr[i].y > reelPanel.height + 50) {
+			this.arr[i].visible = false;
+		} else this.arr[i].visible = true;
+	}
+	
+	for (i = 0; i < this.arr.length; i++) {
+		if (i === this.arr.length - 1 && this.arr[0].y > 0 && this.arr[0].y < reelPanel.height / 2) {
+			this.arr[i].y = this.arr[0].y - 168;
+		} else if (i < this.arr.length - 1 && this.arr[i + 1].y > 0 && this.arr[i + 1].y < reelPanel.height / 2) {
+			this.arr[i].y = this.arr[i + 1].y - 168;
 		}
 	}
-};
+}
 
 Reel.prototype.stop = function () {
 	let value;
@@ -56,10 +64,9 @@ Reel.prototype.stop = function () {
 		if (this.arr[i].y >= 0 && this.arr[i].y <= 168) {
 			value = this.arr[i].y;
 			for (let j = 0; j < this.arr.length; j++) {
-				this.arr[j].y -= value / 4;
-				
+				this.arr[j].y -= value / 24;
 			}
 		}
 	}
-
 }
+

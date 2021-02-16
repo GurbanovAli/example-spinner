@@ -19,24 +19,16 @@ function Button() {
     btn.addListener('click',
         pressBtn
     );
+
     var state = false;
 
     function pressBtn() {
         if (!state) {
-            state = true
             btn.texture = textureDown;
-            ticker.remove(reelStopOne);
-            ticker.remove(reelStopTwo);
-            ticker.remove(reelStopThree);
-            ticker.add(reelPlayOne);
-            ticker.add(reelPlayTwo);
-            ticker.add(reelPlayThree);
-        }
-        setTimeout(() => {
-            btn.texture = textureUp;
+            playBtn()
+        } else {
             stopBtn()
-        }, 1000);
-
+        }
     }
 
     const reelPlayOne = () => {
@@ -64,20 +56,63 @@ function Button() {
         reel3.stop()
     }
 
-    function stopBtn() {
-        state = false
+    function playBtn() {
+
+        state = true
         setTimeout(() => {
-            ticker.remove(reelPlayOne);
-            ticker.add(reelStopOne)
-        }, 1000)
+            btn.texture = textureUp;
+        }, 100)
+        ticker.remove(reelStopOne);
+        ticker.remove(reelStopTwo);
+        ticker.remove(reelStopThree);
+        ticker.add(reelPlayOne);
+        ticker.add(reelPlayTwo);
+        ticker.add(reelPlayThree);
+
         setTimeout(() => {
-            ticker.remove(reelPlayTwo);
-            ticker.add(reelStopTwo)
+            if (state) {
+                state = false
+                setTimeout(() => {
+                    ticker.remove(reelPlayOne);
+                    ticker.add(reelStopOne)
+                }, 100)
+                setTimeout(() => {
+                    ticker.remove(reelPlayTwo);
+                    ticker.add(reelStopTwo)
+                }, 300)
+                setTimeout(() => {
+                    ticker.remove(reelPlayThree);
+                    ticker.add(reelStopThree)
+                }, 500)
+                ticker.add(reelPlayOne);
+                ticker.add(reelPlayTwo);
+                ticker.add(reelPlayThree);
+            }
         }, 2000)
+    }
+
+    function stopBtn() {
         setTimeout(() => {
-            ticker.remove(reelPlayThree);
-            ticker.add(reelStopThree)
-        }, 3000)
+            btn.texture = textureUp;
+        }, 100)
+        if (state) {
+            state = false
+            setTimeout(() => {
+                ticker.remove(reelPlayOne);
+                ticker.add(reelStopOne)
+            }, 100)
+            setTimeout(() => {
+                ticker.remove(reelPlayTwo);
+                ticker.add(reelStopTwo)
+            }, 300)
+            setTimeout(() => {
+                ticker.remove(reelPlayThree);
+                ticker.add(reelStopThree)
+            }, 500)
+        }
+        ticker.add(reelPlayOne);
+        ticker.add(reelPlayTwo);
+        ticker.add(reelPlayThree);
     }
 
 }
