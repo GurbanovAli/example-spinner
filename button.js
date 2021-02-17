@@ -1,120 +1,114 @@
+
+
 function Button() {
-
     PIXI.Container.call(this);
-    let btn = new PIXI.Sprite(resources.btn.texture)
-    let play = new PIXI.Sprite(resources.play.texture)
-    let btnPress = new PIXI.Sprite(resources.btnPress.texture)
-    btn.position.set(stage.width - 550, stage.height / 3.5);
-    play.position.set(10, 10)
-    btnPress.position.set(stage.width - 550, stage.height / 3.5);
+
+    var btnContainer, icoPlay, textureUp, textureDown, button;
+    btnContainer = new PIXI.Graphics();
+    btnContainer.drawCircle(0.5, 0.5, 100);
+    btnContainer.position.set(1050, 300)
+    icoPlay = new PIXI.Sprite(resources.ico_play.texture)
+    icoPlay.position.set(10, 10)
     textureUp = resources.btn.texture;
-    textureDown = resources.btnPress.texture;
+    textureDown = resources.btn_pressed.texture;
+    button = new PIXI.Sprite(textureUp);
 
-    btn.interactive = true;
+    btnContainer.addChild(button)
 
-    this.addChild(btn)
-    btn.addChild(play)
-
-    ticker = PIXI.ticker.shared;
-    btn.addListener('click',
-        pressBtn
-    );
-
-    var state = false;
+    btnContainer.interactive = true;
+    btnContainer.on("mousedown", pressBtn);
+    btnContainer.on("mouseup", releaseBtn);
+    btnContainer.addChild(icoPlay)
 
     function pressBtn() {
-        if (!state) {
-            btn.texture = textureDown;
-            playBtn()
-        } else {
-            stopBtn()
-        }
-    }
+        button.texture = textureDown;
+        if (stateBtn === null) {
+            ticker.add(isStop);
+            ticker.add(play);
+            reel1.vy = 24;
+            reel2.vy = 24;
+            reel3.vy = 24;
+            stateBtn = 1
+        } else if (stateBtn === 2 && reel1.state == null && reel2.state == null && reel3.state == null) {
+            reel1.vy = 69;
+            reel2.vy = 69;
+            reel3.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel1.state == null && reel2.state == null) {
+            reel1.vy = 69;
+            reel2.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel1.state == null && reel3.state == null) {
+            reel1.vy = 69;
+            reel3.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel2.state == null && reel3.state == null) {
+            reel2.vy = 69;
+            reel3.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel1.state == null) {
+            reel1.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel2.state == null) {
+            reel2.vy = 69;
+            stateBtn = 3;
+        } else if (stateBtn === 2 && reel3.state == null) {
+            reel3.vy = 69;
+            stateBtn = 3;
+        };
 
-    const reelPlayOne = () => {
-        renderer.render(stage);
-        reel1.spin()
-    }
-    const reelPlayTwo = () => {
-        renderer.render(stage);
-        reel2.spin()
-    }
-    const reelPlayThree = () => {
-        renderer.render(stage);
-        reel3.spin()
-    }
-    const reelStopOne = () => {
-        renderer.render(stage);
-        reel1.stop()
-    }
-    const reelStopTwo = () => {
-        renderer.render(stage);
-        reel2.stop()
-    }
-    const reelStopThree = () => {
-        renderer.render(stage);
-        reel3.stop()
-    }
+    };
 
-    function playBtn() {
+    function releaseBtn() {
+        button.texture = textureUp;
+        if (stateBtn === 1) {
+            reel1.randomInt();
+            reel2.randomInt();
+            reel3.randomInt();
+            ticker.remove(play);
+            ticker.add(stop);
+            stateBtn = 2;
+        };
 
-        state = true
-        setTimeout(() => {
-            btn.texture = textureUp;
-        }, 100)
-        ticker.remove(reelStopOne);
-        ticker.remove(reelStopTwo);
-        ticker.remove(reelStopThree);
-        ticker.add(reelPlayOne);
-        ticker.add(reelPlayTwo);
-        ticker.add(reelPlayThree);
-
-        setTimeout(() => {
-            if (state) {
-                state = false
-                setTimeout(() => {
-                    ticker.remove(reelPlayOne);
-                    ticker.add(reelStopOne)
-                }, 100)
-                setTimeout(() => {
-                    ticker.remove(reelPlayTwo);
-                    ticker.add(reelStopTwo)
-                }, 300)
-                setTimeout(() => {
-                    ticker.remove(reelPlayThree);
-                    ticker.add(reelStopThree)
-                }, 500)
-                ticker.add(reelPlayOne);
-                ticker.add(reelPlayTwo);
-                ticker.add(reelPlayThree);
-            }
-        }, 2000)
-    }
-
-    function stopBtn() {
-        setTimeout(() => {
-            btn.texture = textureUp;
-        }, 100)
-        if (state) {
-            state = false
-            setTimeout(() => {
-                ticker.remove(reelPlayOne);
-                ticker.add(reelStopOne)
-            }, 100)
-            setTimeout(() => {
-                ticker.remove(reelPlayTwo);
-                ticker.add(reelStopTwo)
-            }, 300)
-            setTimeout(() => {
-                ticker.remove(reelPlayThree);
-                ticker.add(reelStopThree)
-            }, 500)
-        }
-        ticker.add(reelPlayOne);
-        ticker.add(reelPlayTwo);
-        ticker.add(reelPlayThree);
-    }
-
+    };
+    stage.addChild(btnContainer);
 }
 
 Button.prototype = Object.create(PIXI.Container.prototype);
+Button.prototype.constructor = Button;
+
+
+Button.prototype.plays = function () {
+    reel1.spin();
+	reel2.spin();
+	reel3.spin();
+}
+
+Button.prototype.stops = function () {
+    reel1.stop();
+	reel2.stop();
+	reel3.stop();
+}
+
+Button.prototype.isStops = function () {
+	if (reel1.state == 2 && reel2.state == 2 && reel3.state == 2) {
+		ticker.remove(stop);
+		reel1.state = null;
+		reel2.state = null;
+		reel3.state = null;
+		stateBtn = null;
+		ticker.remove(isStop);
+	}
+}
+
+// function play() {
+// 	reel1.spin();
+// 	reel2.spin();
+// 	reel3.spin();
+// };
+
+// function stop() {
+// 	reel1.stop();
+// 	reel2.stop();
+// 	reel3.stop();
+// };
