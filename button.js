@@ -1,5 +1,3 @@
-
-
 function Button() {
     PIXI.Container.call(this);
 
@@ -78,28 +76,28 @@ Button.prototype = Object.create(PIXI.Container.prototype);
 Button.prototype.constructor = Button;
 
 
-Button.prototype.plays = function () {
-    reel1.spin();
-	reel2.spin();
-	reel3.spin();
-}
+// Button.prototype.plays = function() {
+//     reel1.spin();
+//     reel2.spin();
+//     reel3.spin();
+// }
 
-Button.prototype.stops = function () {
-    reel1.stop();
-	reel2.stop();
-	reel3.stop();
-}
+// Button.prototype.stops = function() {
+//     reel1.stop();
+//     reel2.stop();
+//     reel3.stop();
+// }
 
-Button.prototype.isStops = function () {
-	if (reel1.state == 2 && reel2.state == 2 && reel3.state == 2) {
-		ticker.remove(stop);
-		reel1.state = null;
-		reel2.state = null;
-		reel3.state = null;
-		stateBtn = null;
-		ticker.remove(isStop);
-	}
-}
+// Button.prototype.isStops = function() {
+//     if (reel1.state == 2 && reel2.state == 2 && reel3.state == 2) {
+//         ticker.remove(stop);
+//         reel1.state = null;
+//         reel2.state = null;
+//         reel3.state = null;
+//         stateBtn = null;
+//         ticker.remove(isStop);
+//     }
+// }
 
 // function play() {
 // 	reel1.spin();
