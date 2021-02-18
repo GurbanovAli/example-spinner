@@ -1,0 +1,96 @@
+{"frames": { 
+
+"gsym_4_0": 
+{
+    "frame": { "x":2,"y":2,"w":127,"h":119}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":23,"w":127,"h":119},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_1": 
+{
+    "frame": { "x":131,"y":2,"w":123,"h":116}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":35,"y":25,"w":123,"h":116},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_2": 
+{
+    "frame": { "x":256,"y":2,"w":120,"h":113}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":26,"w":120,"h":113},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_3": 
+{
+    "frame": { "x":256,"y":117,"w":116,"h":110}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":39,"y":28,"w":116,"h":110},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_4": 
+{
+    "frame": { "x":131,"y":120,"w":112,"h":107}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":41,"y":29,"w":112,"h":107},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_5": 
+{
+    "frame": { "x":2,"y":123,"w":109,"h":103}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":43,"y":32,"w":109,"h":103},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_6": 
+{
+    "frame": { "x":131,"y":120,"w":112,"h":107}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":41,"y":29,"w":112,"h":107},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_7": 
+{
+    "frame": { "x":256,"y":117,"w":116,"h":110}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":39,"y":28,"w":116,"h":110},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_8": 
+{
+    "frame": { "x":256,"y":2,"w":120,"h":113}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":26,"w":120,"h":113},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_9": 
+{
+    "frame": { "x":131,"y":2,"w":123,"h":116}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":35,"y":25,"w":123,"h":116},
+	"sourceSize": {"w":198,"h":168}
+}, 
+"gsym_4_10": 
+{
+    "frame": { "x":2,"y":2,"w":127,"h":119}, 
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":33,"y":23,"w":127,"h":119},
+	"sourceSize": {"w":198,"h":168}
+}},
+"meta": {
+    "image": "gsym_4.png",
+	"size": {"w":378,"h":229},
+    "scale": "1"
+}
+}
