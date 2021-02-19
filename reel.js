@@ -2,9 +2,9 @@ function Reel(strip, num, numImg) {
 	PIXI.Container.call(this);
 	this.reelstrip = strip;
 	this.num = num;
-	this.numImg = numImg; //reelSequenceNumber
-	this.arrTexture = [];
-	this.arrSprits4 = [];
+	this.numImg = numImg; 
+	this.arrTextures = [];
+	this.arrSprits = [];
 	this.vy = null;
 	this.stopElement = null;
 	this.state = null;
@@ -18,18 +18,23 @@ Reel.prototype = Object.create(PIXI.Container.prototype);
 Reel.prototype.constructor = Reel;
 
 Reel.prototype.init = function () {
-	for (i = 0; i < this.num; i++) {
-		this.arrTexture.push(resources["gsym" + i].textures["gsym_" + i + "_0"]);
+	for (i = 0; i < 9; i++) {
+		let currentArr = [];
+		for (j = 0; j < 11; j++) {
+			currentArr.push(resources["gsym"].textures["gsym_" + i + "_" + j]);
+		}
+		this.arrTextures.push(currentArr)
+	}
 
-		// resources["gsym"].textures["gsym_0_" + i]
-	}
 	for (i = 0; i < 4; i++) {
-		this.arrSprits4[i] = new PIXI.Sprite(this.arrTexture[this.reelstrip[i]]);
-		this.arrSprits4[i].anchor.set(0.5, 0.5);
-		this.arrSprits4[i].y = this.heightSprite * i - this.heightSprite / 2;
-		this.arrSprits4[i].x = this.widthSprite / 2;
-		this.addChild(this.arrSprits4[i]);
+		this.arrSprits[i] = new PIXI.extras.AnimatedSprite(this.arrTextures[this.reelstrip[i]]);
+		this.arrSprits[i].animationSpeed = 0.35;
+		this.arrSprits[i].anchor.set(0.5, 0.5);
+		this.arrSprits[i].y = this.heightSprite * i - this.heightSprite / 2;
+		this.arrSprits[i].x = this.widthSprite / 2;
+		this.addChild(this.arrSprits[i]);
 	}
+
 	//mask
 	let rectangle = new PIXI.Graphics();
 	rectangle.drawRect(0, 0, reelPanel.width - 20, reelPanel.height - 20);
@@ -38,39 +43,40 @@ Reel.prototype.init = function () {
 };
 
 Reel.prototype.spin = function (boolean) {
-	for (i = 0; i < this.arrSprits4.length; i++) {
-		this.arrSprits4[i].y += this.vy;
+	for (i = 0; i < this.arrSprits.length; i++) {
+		this.arrSprits[i].y += this.vy;
 	}
-	if (boolean && this.arrSprits4[0].y > this.heightSprite / 2) {
-		this.arrSprits4.unshift(this.arrSprits4.pop());
-		this.arrSprits4[0].y = this.arrSprits4[1].y - this.heightSprite;
+	if (boolean && this.arrSprits[0].y > this.heightSprite / 2) {
+		this.arrSprits.unshift(this.arrSprits.pop());
+		this.arrSprits[0].y = this.arrSprits[1].y - this.heightSprite;
 		if (this.bufferArr.length > 0) {
-			this.arrSprits4[0].texture = this.arrTexture[this.bufferArr.pop()];
+			this.arrSprits[0].textures = this.arrTextures[this.bufferArr.pop()];
+			this.arrSprits[0].updateTexture()
 		}
 	}
 }
 
 Reel.prototype.stop = function () {
-	if (this.bufferArr.length === 0 && this.arrSprits4[1].y > reelPanel.height / 2 - 139 && this.arrSprits4[1].y <= reelPanel.height / 2 + 30 && this.vy > 1) {
+	if (this.bufferArr.length === 0 && this.arrSprits[1].y > reelPanel.height / 2 - 139 && this.arrSprits[1].y <= reelPanel.height / 2 + 30 && this.vy > 1) {
 		this.state = 1;
 		this.vy = 12;
 		this.spin(false);
-	} else if (this.bufferArr.length === 0 && this.arrSprits4[1].y >= reelPanel.height / 2 + 30 && this.vy > 0) {
+	} else if (this.bufferArr.length === 0 && this.arrSprits[1].y >= reelPanel.height / 2 + 30 && this.vy > 0) {
 		this.vy = -1;
 		this.spin(false);
-	} else if (this.bufferArr.length === 0 && this.arrSprits4[2].y === reelPanel.height / 2 - 10 && this.vy < 0) {
+	} else if (this.bufferArr.length === 0 && this.arrSprits[2].y === reelPanel.height / 2 - 10 && this.vy < 0) {
 		this.vy = 0;
 		this.state = 2;
 	} else {
 		this.spin(true);
 	}
-	//console.log(this.arrSprits4)
 }
 
 Reel.prototype.getPosition = function (n) {
+	// if you want to make three identical elements
 	this.stopElement = n
-	// Math.floor(Math.random() * ((this.reelstrip.length - 1) + 1));
-	let currentEl = this.stopElement;
+	let currentEl = this.stopElement 
+	//let currentEl = Math.floor(Math.random() * ((this.reelstrip.length - 1) + 1));
 	currentEl--;
 	for (i = 0; i < this.numImg * 5 + 3; i++) {
 		if (currentEl > this.reelstrip.length - 1) {
@@ -82,8 +88,4 @@ Reel.prototype.getPosition = function (n) {
 		this.bufferArr.push(this.reelstrip[currentEl])
 		currentEl++;
 	}
-}
-
-Reel.prototype.anim = function () {
-
 }

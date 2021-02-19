@@ -79,23 +79,14 @@ var width = 1280,
 		2, //Melon
 		0 //Seven
 	];
+
 loader
 	.add('bgr', 'images/bgr.png')
 	.add('reelPanel', 'images/reels.png')
-	.add('gsym_0', 'images/gsym_0.png')
-	.add('gsym', 'jsonЫ/gsym.json')
-	.add('gsym_1', 'images/gsym_1.png')
-	.add('gsym_2', 'images/gsym_2.png')
-	.add('gsym_3', 'images/gsym_3.png')
-	.add('gsym_4', 'images/gsym_4.png')
-	.add('gsym_5', 'images/gsym_5.png')
-	.add('gsym_6', 'images/gsym_6.png')
-	.add('gsym_7', 'images/gsym_7.png')
-	.add('gsym_8', 'images/gsym_8.png')
+	.add('gsym', 'images/gsym.json')
 	.add('btn_pressed', 'images/btn_pressed.png')
 	.add('ico_play', 'images/ico_play.png')
 	.add('btn', 'images/btn.png')
-	
 	.load(onAssetsLoaded);
 
 function onAssetsLoaded() {
@@ -129,11 +120,9 @@ function init() {
 	reel3.position.set(426, 10);
 	reelPanelOne.addChild(reel3);
 
-	//button
 	const button = new Button();
 	button.position.set(1050, 300);
-	button.initBtn()
-	//end
+	button.init()
 
 	stage.addChild(reelPanelOne);
 	ticker = PIXI.ticker.shared;

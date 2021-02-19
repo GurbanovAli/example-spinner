@@ -9,7 +9,7 @@ function Button() {
 Button.prototype = Object.create(PIXI.Container.prototype);
 Button.prototype.constructor = Button;
 
-Button.prototype.initBtn = function () {
+Button.prototype.init = function () {
     textureUp = this.textureUp;
     textureDown = this.textureDown;
     button = this.button;
@@ -35,11 +35,14 @@ Button.prototype.initBtn = function () {
 Button.prototype.pressBtn = function () {
     button.texture = textureDown;
     if (stateBtn === null) {
-        ticker.add(isStop);
+        ticker.add(stop);
         reel1.getPosition(0);
         reel2.getPosition(9);
         reel3.getPosition(2);
-        ticker.add(stop);
+        reel1.arrSprits[2].gotoAndStop(0)
+        reel2.arrSprits[2].gotoAndStop(0)
+        reel3.arrSprits[2].gotoAndStop(0)
+        ticker.add(getStop);
         reel1.vy = 24;
         reel2.vy = 24;
         reel3.vy = 24;
@@ -77,33 +80,24 @@ Button.prototype.releaseBtn = function () {
     button.texture = textureUp;
 };
 
-function stop() {
+function getStop() {
     reel1.stop();
     reel2.stop();
     reel3.stop();
 };
 
-function isStop() {
+function stop() {
     if (reel1.state == 2 && reel2.state == 2 && reel3.state == 2) {
-        ticker.remove(stop);
+        ticker.remove(getStop);
         reel1.state = null;
         reel2.state = null;
         reel3.state = null;
         stateBtn = null;
-        ticker.remove(isStop);
-        if (reel1.arrSprits4[2].texture === reel2.arrSprits4[2].texture && reel2.arrSprits4[2].texture === reel3.arrSprits4[2].texture) {
-            console.log(reel1.arrTexture[2].baseTexture.imageUrl)
-             var arr = reel1.arrSprits4.pop(reel1.arrSprits4[2]);
-            for (let i = 0; i < 4; i++) {
-                arr.pop(arrSprits4)
-                var texture = resources["gsym"].textures["gsym_0_" + i]
-                arr.push(texture);
-            }
-        //      var b = new PIXI.extras.AnimatedSprite(arr);
-        //    // b.animationSpeed = 0.167;
-        //    //b.play();
-        // //     // stage.addChild(bgr);
-        //   stage.addChild(arr);
+        if (reel1.arrSprits[2].texture === reel2.arrSprits[2].texture && reel2.arrSprits[2].texture === reel3.arrSprits[2].texture) {
+            reel1.arrSprits[2].play();
+            reel2.arrSprits[2].play();
+            reel3.arrSprits[2].play();
         }
+        ticker.remove(stop);
     }
 }
